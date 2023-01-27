@@ -18,6 +18,11 @@ namespace Projeto_MVC_Udemy.Controllers
             return View();
         }
 
+        public IActionResult Demo()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
