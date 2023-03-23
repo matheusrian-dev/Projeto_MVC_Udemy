@@ -15,6 +15,7 @@ namespace Projeto_MVC_Udemy.Controllers
 
         public IActionResult Index()
         {
+            TempData["Nome"] = "Macoratti";
             return View();
         }
 
