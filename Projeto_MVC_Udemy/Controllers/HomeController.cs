@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Projeto_LanchesMac_Udemy.Repositories.Interfaces;
+using Projeto_LanchesMac_Udemy.ViewModels;
 using Projeto_MVC_Udemy.Models;
 using System.Diagnostics;
 
@@ -6,17 +8,21 @@ namespace Projeto_MVC_Udemy.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILancheRepository _lancheRepository;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILancheRepository lancheRepository)
         {
-            _logger = logger;
+            _lancheRepository = lancheRepository;
         }
 
         public IActionResult Index()
         {
-            TempData["Nome"] = "Macoratti";
-            return View();
+            var homeViewModel = new HomeViewModel
+            {
+                LanchesPreferidos = _lancheRepository.LanchesPreferidos
+            };
+            return View(homeViewModel);
         }
 
         public IActionResult Demo()

@@ -1,4 +1,6 @@
-﻿using Projeto_LanchesMac_Udemy.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using Projeto_LanchesMac_Udemy.Context;
 
 namespace Projeto_LanchesMac_Udemy.Models
 {
@@ -71,6 +73,31 @@ namespace Projeto_LanchesMac_Udemy.Models
                 }
             }
             _context.SaveChanges();
+        }
+
+        public List<ItemCarrinhoCompra> GetCarrinhoCompraItens()
+        {
+            return ItensCarrinhoCompra ?? (ItensCarrinhoCompra = _context.
+                                           ItemCarrinhoCompra.
+                                           Where(c => c.CarrinhoCompraId == CarrinhoCompraId).
+                                           Include(s => s.Lanche).ToList());
+        }
+
+        public void LimparCarrinho()
+        {
+            var itensCarrinho = _context.ItemCarrinhoCompra.
+                Where(carrinho => carrinho.CarrinhoCompraId == CarrinhoCompraId);
+
+            _context.ItemCarrinhoCompra.RemoveRange(itensCarrinho);
+
+            _context.SaveChanges();
+        }
+
+        public decimal GetCarrinhoCompraTotal()
+        {
+            var total = _context.ItemCarrinhoCompra.Where(c => c.CarrinhoCompraId == CarrinhoCompraId).Select(c => c.Lanche.Preco * c.Quantidade).Sum();
+
+            return total;
         }
     }
 }
