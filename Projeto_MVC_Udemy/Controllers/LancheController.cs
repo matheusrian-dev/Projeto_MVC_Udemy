@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Projeto_LanchesMac_Udemy.Models;
 using Projeto_LanchesMac_Udemy.Repositories.Interfaces;
 using Projeto_LanchesMac_Udemy.ViewModels;
 
@@ -12,20 +13,34 @@ namespace Projeto_LanchesMac_Udemy.Controllers
             _lancheRepository = lancheRepository;
         }
 
-        public IActionResult List()
+        public IActionResult List(string categoria)
         {
-            //ViewData["Título"] = "Todos os Lanches";
-            //ViewData["Data"] = DateTime.Now;
-            //var lanches = _lancheRepository.Lanches;
-            //var totalLanches = lanches.Count();
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
 
-            //ViewBag.Total = "Total Lanches : ";
-            //ViewBag.TotalLanches = totalLanches;
+            if (string.IsNullOrEmpty(categoria))
+            {
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.Id);
+                categoriaAtual = "Todos os Lanches";
+            }
+            else
+            {
+                if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
+                {
+                    lanches = _lancheRepository.Lanches.Where(l => l.Categoria.Nome.Equals("Normal")).OrderBy(l => l.Nome);
+                }
+                else
+                {
+                    lanches = _lancheRepository.Lanches.Where(l => l.Categoria.Nome.Equals("Natural")).OrderBy(l => l.Nome);
+                }
+                categoriaAtual = categoria;
+            }
 
-            //return View(lanches);
-            var lanchesListViewModel = new LancheListViewModel();
-            lanchesListViewModel.Lanches = _lancheRepository.Lanches;
-            lanchesListViewModel.CategoriaAtual = "Categoria Atual";
+            var lanchesListViewModel = new LancheListViewModel
+            {
+                Lanches = lanches,
+                CategoriaAtual = categoriaAtual
+            };
 
             return View(lanchesListViewModel);
         }
