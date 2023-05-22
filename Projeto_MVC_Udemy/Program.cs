@@ -34,8 +34,22 @@ app.UseSession();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+//Também é possível utilizar os métodos MapControllers(mais utilizado com APIs), MapGet(), UseRouting() com a sintaxe abaixo
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    //é importante ordernar de forma correta os endpoints utilizados,
+    //pois caso haja uma rota mais genérica acima, as que estão abaixo não serão utilizadas!
+    //Abaixo tem uma forma mais simplificada de se definir o mapeamento padrão
+
+    endpoints.MapControllerRoute(
+        name: "categoriaFiltro",
+        pattern: "Lanche/{action}/{categoria?}",
+        defaults: new { Controller = "Lanche", action = "List" });
+
+    endpoints.MapDefaultControllerRoute();
+});
 
 app.Run();
