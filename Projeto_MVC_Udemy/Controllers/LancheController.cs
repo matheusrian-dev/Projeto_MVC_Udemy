@@ -37,5 +37,11 @@ namespace Projeto_LanchesMac_Udemy.Controllers
 
             return View(lanchesListViewModel);
         }
+
+        public IActionResult Details(int lancheId) // Lembrete Importante, mesmo que na Model a propriedade esteja configurado como Id (nesse caso), na url se utiliza o parâmetro 
+        {                                          // passado na action! Por exemplo, nesse caso se utiliza asp-route-lancheId em vez de asp-route-id
+            var lanche = _lancheRepository.Lanches.FirstOrDefault(l => l.Id == lancheId);
+            return View(lanche);
+        }
     }
 }

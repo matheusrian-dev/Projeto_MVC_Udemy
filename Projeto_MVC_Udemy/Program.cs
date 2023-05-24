@@ -35,9 +35,7 @@ app.UseSession();
 app.UseAuthorization();
 
 //Também é possível utilizar os métodos MapControllers(mais utilizado com APIs), MapGet(), UseRouting() com a sintaxe abaixo
-//app.MapControllerRoute(
-//    name: "default", 
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.UseEndpoints(endpoints =>
 {
     //é importante ordernar de forma correta os endpoints utilizados,
@@ -49,7 +47,10 @@ app.UseEndpoints(endpoints =>
         pattern: "Lanche/{action}/{categoria?}", //Padrão URL da rota
         defaults: new { Controller = "Lanche", action = "List" }); //Contém valores padrão para os parâmetros de rota
 
-    endpoints.MapDefaultControllerRoute();
+    //endpoints.MapDefaultControllerRoute();
+    endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
 app.Run();

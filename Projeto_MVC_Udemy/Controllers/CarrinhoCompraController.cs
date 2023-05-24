@@ -37,7 +37,7 @@ namespace Projeto_LanchesMac_Udemy.Controllers
         //301 - Moved Permanently
         //307 - Temporary Redirect
         //308 - Permanent Redirect
-        public RedirectToActionResult AdicionarItemNoCarrinhoCompra(int lancheId) //também é possível utilizar o tipo IActionResult aqui
+        public IActionResult AdicionarItemNoCarrinhoCompra(int lancheId) 
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.Id == lancheId);
 
@@ -49,7 +49,7 @@ namespace Projeto_LanchesMac_Udemy.Controllers
             return RedirectToAction("Index");
         }
 
-        public RedirectToActionResult RemoverItemDoCarrinhoCompra(int lancheId)
+        public IActionResult RemoverItemDoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.Id == lancheId);
 
