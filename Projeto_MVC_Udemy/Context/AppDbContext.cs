@@ -13,6 +13,9 @@ namespace Projeto_LanchesMac_Udemy.Context
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Lanche> Lanches { get; set; }
         public DbSet<ItemCarrinhoCompra> ItemCarrinhoCompra { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<PedidoDetalhe> PedidoDetalhes { get; set; }
+
 
     }
 }

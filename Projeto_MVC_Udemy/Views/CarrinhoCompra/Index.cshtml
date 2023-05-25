@@ -1,8 +1,9 @@
 ﻿@model CarrinhoCompraViewModel
 <div class="container">
     <div class="row">
-        <img src="~/images/Full-Cart-icon.png"/>
+        
         <div>
+            <img src="~/images/Full-Cart-icon.png" width="30px" height="30px" />
             <h4>Seu Carrinho de Compras</h4>
         </div>
 
@@ -18,24 +19,25 @@
             </thead>
 
             <tbody>
-                @foreach(var item in Model.CarrinhoCompra.ItensCarrinhoCompra)
+                @foreach (var item in Model.CarrinhoCompra.ItensCarrinhoCompra)
                 {
                     <tr>
                         <td class="text-center">@item.Quantidade</td>
                         <td class="text-left">@item.Lanche.Nome</td>
                         <td class="text-right">@item.Lanche.Preco</td>
-                    
+
                         <td class="text-right">
                             @((item.Quantidade * item.Lanche.Preco).ToString("c"))
                         </td>
 
                         <td class="text-center">
-                            <a asp-controller="CarrinhoCompra" asp-action="RemoverItemDocarrinhoCompra"
-                               asp-route-lancheid="@item.Lanche.Id">
-                               <img src="~/images/delete-circle-icon-11563655960vxqxj7ly3u.png" />
+
+                            <a asp-controller="CarrinhoCompra" asp-action="RemoverItemDoCarrinhoCompra"
+                               asp-route-lancheId="@item.Lanche.Id">
+                                <img src="~/images/delete-circle-icon-11563655960vxqxj7ly3u.png" width="20px" height="20px" />
                             </a>
                         </td>
-                       
+
                     </tr>
 
                 }
