@@ -3,12 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Projeto_LanchesMac_Udemy.Repositories.Interfaces;
 using Projeto_LanchesMac_Udemy.Repositories;
 using Projeto_LanchesMac_Udemy.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient < ILancheRepository, LancheRepository>();
 builder.Services.AddTransient < ICategoriaRepository, CategoriaRepository>();
@@ -32,7 +36,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 //Também é possível utilizar os métodos MapControllers(mais utilizado com APIs), MapGet(), UseRouting() com a sintaxe abaixo
