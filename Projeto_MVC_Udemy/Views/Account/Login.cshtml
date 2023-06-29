@@ -2,7 +2,7 @@
 
 <table class="table">
     <tr>
-        <td><img src="~/images/LogonIcon.jpg" alt="Realizar Login" class="center-block" /></td>
+        <td><img src="~/images/LogonIcon.jpg" alt="Realizar Login" class="center-block" width="200" height="200" /></td>
         <td>
             <div class="col-10 col-md-10 col-lg-10"
                 <h4>Login</h4>
@@ -11,6 +11,23 @@
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <input type="hidden" asp-for="ReturnUrl"/>
                     <div class="form-group">
+                        <label asp-for="UserName" class="col-md-2 control-label"></label>
+                        <div class="col-md-6">
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="col-md-2 control-label"></label>
+                        <div class="col-md-6">
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <input type="submit" class="btn btn-success" value="Log in" />
+                        </div>
                     </div>
                 </form>
             </div>
