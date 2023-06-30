@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Projeto_LanchesMac_Udemy.Models;
 using Projeto_LanchesMac_Udemy.Repositories.Interfaces;
 using Projeto_LanchesMac_Udemy.ViewModels;
@@ -36,6 +37,7 @@ namespace Projeto_LanchesMac_Udemy.Controllers
         //301 - Moved Permanently
         //307 - Temporary Redirect
         //308 - Permanent Redirect
+        [Authorize]
         public IActionResult AdicionarItemNoCarrinhoCompra(int lancheId) 
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.Id == lancheId);
@@ -48,6 +50,7 @@ namespace Projeto_LanchesMac_Udemy.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult RemoverItemDoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.Id == lancheId);
