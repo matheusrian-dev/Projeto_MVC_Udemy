@@ -4,6 +4,7 @@ using Projeto_LanchesMac_Udemy.Repositories.Interfaces;
 using Projeto_LanchesMac_Udemy.Repositories;
 using Projeto_LanchesMac_Udemy.Models;
 using Microsoft.AspNetCore.Identity;
+using Projeto_LanchesMac_Udemy.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ILancheRepository, LancheRepository>();
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 builder.Services.AddMemoryCache();
@@ -31,9 +33,21 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+void GenerateUsersProfiles(WebApplication app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<ISeedUserRoleInitial>();
+        service.SeedRoles();
+        service.SeedUsers();
+    }
+}
+
+GenerateUsersProfiles(app);
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseSession();
 app.UseAuthentication();

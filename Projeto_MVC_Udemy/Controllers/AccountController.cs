@@ -66,6 +66,7 @@ namespace Projeto_LanchesMac_Udemy.Controllers
                 if (result.Succeeded)
                 {
                     //await _signInManager.SignInAsync(user, isPersistent: false); //Caso queira já realizar o SignIn após realizar o cadastro
+                    await _userManager.AddToRoleAsync(user, "Member");
                     return RedirectToAction("Login", "Account");
                 }
                 else
